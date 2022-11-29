@@ -8,4 +8,4 @@ COPY goslos ./
 
 EXPOSE 8080
 
-CMD [ "/goslos" ]
+CMD [ "/gosloss" ]
