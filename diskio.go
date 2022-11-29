@@ -7,8 +7,8 @@ import (
 	"time"
 )
 
-func RunDiskIO(minChunkSizeInByte string, maxChunkSizeInByte string, totalSizeInByte string, operationIntervalinMilisecond int, writeRatioInPercentage float32) {
-	//writtenByte := []byte{}
+func RunDiskIO(minChunkSizeInByte string, maxChunkSizeInByte string, totalSizeInByte string, writeRatioInPercentage float32) {
+	operationIntervalinMilisecond := 100
 
 	minChunkSizeInByteParsed := ParseUnitToByte(minChunkSizeInByte)
 	maxChunkSizeInByteParsed := ParseUnitToByte(maxChunkSizeInByte)
@@ -38,8 +38,6 @@ start:
 
 		// check how many bytes we are going write, if exceed, break
 		if totalChunkToBeWritten > totalSizeInByteParsed {
-
-			println("All written")
 			break
 		}
 
@@ -74,7 +72,6 @@ start:
 	}
 
 	// finished writing, so we truncate the file and write/read again from truncated position
-	println("Truncate!")
 	truncatedPosition := GetChunk(minChunkSizeInByteParsed, totalSizeInByteParsed)
 	f.Truncate(truncatedPosition)
 	f.Seek(truncatedPosition, 0)
@@ -82,7 +79,6 @@ start:
 	if totalChunkWritten < 0 {
 		totalChunkWritten = 0
 	}
-	println("Total written after truncate: ", totalChunkWritten)
 	goto start
 }
 

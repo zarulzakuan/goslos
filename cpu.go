@@ -8,7 +8,7 @@ import (
 
 const unitHundresOfMicrosecond = 1000
 
-func RunCPULoad(coresCount int, timeSeconds int, minUsage int, maxUsage int) {
+func RunCPULoad(coresCount int, runForXSeconds uint, minUsage uint, maxUsage uint) {
 	runtime.GOMAXPROCS(coresCount)
 
 	// second     ,s  * 1
@@ -25,8 +25,8 @@ func RunCPULoad(coresCount int, timeSeconds int, minUsage int, maxUsage int) {
 	if coresCount == 0 || coresCount > defaultCoreCount {
 		coresCount = defaultCoreCount
 	}
-	if timeSeconds == 0 {
-		timeSeconds = 31536000 // 1 year
+	if runForXSeconds == 0 {
+		runForXSeconds = 31536000 // 1 year
 	}
 
 	for i := 0; i < coresCount; i++ {
@@ -38,8 +38,7 @@ func RunCPULoad(coresCount int, timeSeconds int, minUsage int, maxUsage int) {
 			runtime.LockOSThread()
 			// endless loop
 			for {
-				randCPUUsage := RandCPUUsage(minUsage, maxUsage)
-				println(randCPUUsage)
+				randCPUUsage := RandomGenerator(int(minUsage), int(maxUsage))
 				runMicrosecond := unitHundresOfMicrosecond * randCPUUsage
 				sleepMicrosecond := unitHundresOfMicrosecond*100 - runMicrosecond
 
@@ -63,7 +62,7 @@ func RunCPULoad(coresCount int, timeSeconds int, minUsage int, maxUsage int) {
 	}
 	// how long
 
-	time.Sleep(time.Duration(timeSeconds) * time.Second)
+	time.Sleep(time.Duration(runForXSeconds) * time.Second)
 	// print("Time's up!")
 
 	for _, quit := range allQuit {
@@ -73,7 +72,7 @@ func RunCPULoad(coresCount int, timeSeconds int, minUsage int, maxUsage int) {
 	// print("Bye")
 }
 
-func RandCPUUsage(min int, max int) int {
+func RandomGenerator(min int, max int) int {
 	rand.Seed(time.Now().UnixNano())
 
 	return rand.Intn(max-min+1) + min

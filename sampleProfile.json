@@ -1,0 +1,27 @@
+{
+    "CPU": {
+        "CoresCount": 0,
+        "RunForXSeconds": 0,
+        "MinUsagePercentage": 50,
+        "MaxUsagePercentage": 80,
+        "Run": true,
+        "RunAfterXSeconds": 5
+    },
+    "Memory": {
+        "MaxMemPercentage": 65,
+        "Run": false,
+        "RunAfterXSeconds": 0
+    },
+    "Disk": {
+        "MinChunkSizeInByte": "1G",
+        "MaxChunkSizeInByte": "2G",
+        "TotalSizeInByte": "10G",
+        "WriteRatioInPercentage": 75,
+        "Run": true,
+        "RunAfterXSeconds": 0
+    },
+    "Network": {
+        "Run": true,
+        "RunAfterXSeconds": 0
+    }
+}

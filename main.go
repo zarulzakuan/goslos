@@ -8,14 +8,11 @@ import (
 
 func main() {
 	e := echo.New()
-	e.GET("/", func(c echo.Context) error {
-		RunDiskIO("1G", "2G", "10G", 100, 50)
-		RunCPULoad(8, 60, 70, 100)
-		RunMemLoad(60, "5G")
-		return c.String(http.StatusOK, "Hello, World!")
+	e.GET("/hello", func(c echo.Context) error {
+		return c.String(http.StatusOK, "Hello, there!")
 	})
-	// RunCPULoad(0, 60, 0, 0)
-	RunDiskIO("1M", "20M", "1s", 100, 75)
 
+	e.GET("/getstatonce", GetStatOnce)
+	e.POST("/runprofile", PostRunProfile)
 	e.Logger.Fatal(e.Start(":8080"))
 }
